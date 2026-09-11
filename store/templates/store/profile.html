@@ -1,0 +1,87 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+My Profile | Fashion Store
+{% endblock %}
+
+{% block content %}
+
+<section class="profile-page">
+
+    <div class="profile-heading">
+        
+        <h1>My Profile</h1>
+    </div>
+
+    <div class="profile-container">
+
+        <div class="profile-card">
+
+            <div class="profile-icon">
+                <svg width="70" height="70" viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+
+                    <circle cx="12" cy="8" r="4"
+                            stroke="currentColor"
+                            stroke-width="1.5"/>
+
+                    <path d="M4.5 21C5.3 16.8 8 14.5 12 14.5C16 14.5 18.7 16.8 19.5 21"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"/>
+
+                </svg>
+            </div>
+
+            <h2>{{ user.username }}</h2>
+
+            <div class="profile-details">
+
+                <div class="profile-detail">
+                    <span>Username</span>
+                    <strong>{{ user.username }}</strong>
+                </div>
+
+                <div class="profile-detail">
+                    <span>Email</span>
+                    <strong>{{ user.email }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="profile-links">
+
+            <a href="{% url 'my_orders' %}" class="profile-link">
+                <div>
+                    <h3>My Orders</h3>
+                    <p>View your orders and order details</p>
+                </div>
+                <span>→</span>
+            </a>
+
+            <a href="{% url 'checkout' %}" class="profile-link">
+                <div>
+                    <h3>My Addresses</h3>
+                    <p>Manage your saved delivery addresses</p>
+                </div>
+                <span>→</span>
+            </a>
+
+            <a href="{% url 'logout' %}" class="profile-link">
+                <div>
+                    <h3>Logout</h3>
+                    <p>Sign out of your Fashion Store account</p>
+                </div>
+                <span>→</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+Order Confirmed | Fashion Store
+{% endblock %}
+
+
+{% block content %}
+
+<section class="order-confirmation-page">
+
+    <div class="confirmation-container">
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="confirmation-header">
+
+            <div class="success-icon">✓</div>
+
+            <p class="confirmation-label">ORDER CONFIRMED</p>
+
+            <h1>Thank You for Your Order!</h1>
+
+            <p class="confirmation-message">
+                Your order has been placed successfully.
+            </p>
+
+        </div>
+
+
+        <!-- ORDER DETAILS -->
+        <div class="confirmation-details">
+
+            <div class="confirmation-row">
+                <span>Order Number</span>
+                <strong>#{{ order.id }}</strong>
+            </div>
+
+            <div class="confirmation-row">
+                <span>Order Date</span>
+                <strong>{{ order.created_at|date:"d M Y" }}</strong>
+            </div>
+
+            <div class="confirmation-row">
+                <span>Order Status</span>
+                <strong>{{ order.status|title }}</strong>
+            </div>
+
+            <div class="confirmation-row total-row">
+                <span>Total Amount</span>
+                <strong>₹{{ order.total_amount }}</strong>
+            </div>
+
+        </div>
+
+
+        <!-- DELIVERY ADDRESS -->
+        <div class="confirmation-address">
+
+            <p class="confirmation-section-title">
+                DELIVERY ADDRESS
+            </p>
+
+            <strong>
+                {{ order.address.first_name }}
+                {{ order.address.last_name }}
+            </strong>
+
+            <p>{{ order.address.address }}</p>
+
+            <p>
+                {{ order.address.city }},
+                {{ order.address.state }}
+                - {{ order.address.pincode }}
+            </p>
+
+            <p>Phone: {{ order.address.phone }}</p>
+
+        </div>
+
+
+        <!-- ORDER ITEMS -->
+        <div class="confirmation-items">
+
+            <p class="confirmation-section-title">
+                ORDER ITEMS
+            </p>
+
+            {% for item in order.items.all %}
+
+            <div class="confirmation-product">
+
+                <div>
+                    <strong>{{ item.product.name }}</strong>
+                    <p>Quantity: {{ item.quantity }}</p>
+                </div>
+
+                <strong>
+                    ₹{{ item.price }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- CONTINUE SHOPPING -->
+        <a
+            href="{% url 'home' %}"
+            class="continue-shopping-btn"
+        >
+            CONTINUE SHOPPING
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+My Orders | Fashion Store
+{% endblock %}
+
+
+{% block content %}
+
+<section class="my-orders-page">
+
+    <div class="my-orders-header">
+        <h1>My Orders</h1>
+    </div>
+
+
+    {% if orders %}
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-card-top">
+
+                    <div>
+                        <span class="order-label">
+                            ORDER NUMBER
+                        </span>
+
+                        <h2>#{{ order.id }}</h2>
+                    </div>
+
+
+                    <div class="order-status">
+                        {{ order.status|title }}
+                    </div>
+
+                </div>
+
+
+                <div class="order-card-info">
+
+                    <div>
+                        <span>Date</span>
+                        <strong>
+                            {{ order.created_at|date:"d M Y" }}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Total</span>
+                        <strong>
+                            ₹{{ order.total_amount }}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Items</span>
+                        <strong>
+                            {{ order.items.count }}
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="order-card-footer">
+
+                    <a
+                        href="{% url 'order_detail' order.id %}"
+                        class="view-order-btn"
+                    >
+                        VIEW ORDER
+                    </a>
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="no-orders">
+
+            <h2>No Orders Yet</h2>
+
+            <p>
+                You haven't placed any orders yet.
+                Start exploring our latest collection.
+            </p>
+
+            <a
+                href="{% url 'product' %}"
+                class="continue-shopping-btn"
+            >
+                START SHOPPING
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+Login | Fashion Store
+{% endblock %}
+
+{% block content %}
+
+<section class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="auth-header">
+            <h1>Welcome Back</h1>
+            <p>Log in to continue shopping</p>
+        </div>
+
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+
+            <div class="auth-field">
+                <label>Username</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <div class="auth-field">
+                <label>Password</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                LOG IN
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+            Don't have an account?
+            <a href="{% url 'signup' %}">Create an account</a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

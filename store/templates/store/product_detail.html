@@ -1,0 +1,217 @@
+{% extends 'store/base.html' %}
+
+{% load static %}
+
+{% block title %}
+{{ product.name }} | Fashion Store
+{% endblock %}
+
+
+{% block content %}
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <div class="stock-alert">
+            {{ message }}
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+<!-- CURRENT PRODUCT DETAILS -->
+<section class="product-detail-page">
+
+    <!-- Product Image -->
+    <div class="product-detail-image">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% endif %}
+    </div>
+
+
+    <!-- Product Information -->
+    <div class="product-detail-info">
+
+        <p class="detail-category">
+            {{ product.get_category_display }}
+        </p>
+
+        <h1>{{ product.name }}</h1>
+
+        <p class="detail-price">
+            ₹{{ product.price }}
+        </p>
+
+        <div class="detail-line"></div>
+
+        <p class="detail-description">
+            {{ product.description }}
+        </p>
+
+        <p class="detail-stock">
+            {% if product.stock > 0 %}
+                In Stock
+            {% else %}
+                Out of Stock
+            {% endif %}
+        </p>
+
+       <!-- Quantity -->
+{% if product.stock > 0 %}
+
+<div class="quantity-section">
+
+    <p>Quantity</p>
+
+    <div class="quantity-box">
+        <button type="button" id="decrease-btn">−</button>
+
+        <span id="quantity">1</span>
+
+        <button type="button" id="increase-btn">+</button>
+    </div>
+
+    <p id="stock-message" class="stock-message"></p>
+
+    {% if product.stock <= 5 %}
+        <p class="stock-left">
+            Only {{ product.stock }} item{{ product.stock|pluralize }} left
+        </p>
+    {% endif %}
+
+</div>
+
+
+<!-- Add to Cart -->
+<form action="{% url 'add_to_cart' product.id %}" method="POST">
+
+    {% csrf_token %}
+
+    <input
+        type="hidden"
+        name="quantity"
+        id="quantity-input"
+        value="1"
+    >
+
+    <button type="submit" class="add-to-cart-btn">
+        ADD TO CART
+    </button>
+
+</form>
+
+{% else %}
+
+<!-- OUT OF STOCK -->
+<div class="out-of-stock-section">
+
+    <p class="out-of-stock-text">
+        OUT OF STOCK
+    </p>
+
+    <button
+        type="button"
+        class="add-to-cart-btn disabled-cart-btn"
+        disabled
+    >
+        OUT OF STOCK
+    </button>
+
+</div>
+
+{% endif %}
+</section>
+
+
+<!-- RELATED PRODUCTS -->
+{% if related_products %}
+<section class="product-page related-products-section">
+
+    <div class="related-products-header">
+        <p>YOU MAY ALSO LIKE</p>
+        <h2>Related Products</h2>
+    </div>
+
+    <div class="products-grid">
+
+    {% for related_product in related_products %}
+    <a href="{% url 'product_detail' related_product.id %}"
+       class="product-card">
+
+        <div class="product-image">
+            {% if related_product.image %}
+                <img src="{{ related_product.image.url }}"
+                     alt="{{ related_product.name }}">
+            {% endif %}
+        </div>
+
+        <div class="product-details">
+
+            <p class="product-category">
+                {{ related_product.get_category_display }}
+            </p>
+
+            <h3>{{ related_product.name }}</h3>
+
+            <p class="product-price">
+                ₹{{ related_product.price }}
+            </p>
+
+        </div>
+
+    </a>
+    {% endfor %}
+
+</div>
+</section>
+{% endif %}
+
+<script>
+    const decreaseBtn = document.getElementById("decrease-btn");
+    const increaseBtn = document.getElementById("increase-btn");
+    const quantityDisplay = document.getElementById("quantity");
+    const quantityInput = document.getElementById("quantity-input");
+
+    const availableStock = {{ product.stock }};
+
+    let quantity = 1;
+
+    if (increaseBtn) {
+
+        increaseBtn.addEventListener("click", function () {
+
+            if (quantity < availableStock) {
+                quantity++;
+                quantityDisplay.textContent = quantity;
+                quantityInput.value = quantity;
+
+                document.getElementById("stock-message").textContent = "";
+            } else {
+                document.getElementById("stock-message").textContent =
+                    "Only " + availableStock + " items available in stock";
+            }
+
+        });
+
+    }
+
+    if (decreaseBtn) {
+
+        decreaseBtn.addEventListener("click", function () {
+
+            if (quantity > 1) {
+                quantity--;
+                quantityDisplay.textContent = quantity;
+                quantityInput.value = quantity;
+
+                document.getElementById("stock-message").textContent = "";
+            }
+
+        });
+
+    }
+</script>
+{% endblock %}

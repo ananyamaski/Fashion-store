@@ -1,0 +1,77 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+Special Offers | Fashion Store
+{% endblock %}
+
+{% block content %}
+
+<section class="sale-section">
+
+    <div class="sale-heading">
+        <p>SPECIAL OFFERS</p>
+    </div>
+
+    {% if products %}
+
+    <div class="sale-products-grid">
+
+        {% for product in products %}
+
+        <a href="{% url 'product_detail' product.id %}" class="sale-product-card">
+
+            <div class="sale-product-image">
+
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% endif %}
+
+            </div>
+
+            <div class="sale-product-info">
+
+                <p class="sale-product-category">
+                    {{ product.get_category_display }}
+                </p>
+
+                <h3>{{ product.name }}</h3>
+
+                <div class="sale-product-price">
+
+                    <span class="original-price">
+                        ₹{{ product.price|floatformat:0 }}
+                    </span>
+
+                    <span class="sale-price">
+                        ₹{{ product.sale_price|floatformat:0 }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-cart">
+
+        <h2>No products on sale</h2>
+
+        <p>Check back later for special offers and discounts.</p>
+
+        <a href="{% url 'product' %}" class="continue-shopping-btn">
+            CONTINUE SHOPPING
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

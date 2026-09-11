@@ -1,0 +1,101 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+New Arrivals | Fashion Store
+{% endblock %}
+
+
+{% block content %}
+
+<section class="new-arrivals-page">
+
+    <!-- HEADER -->
+    <div class="new-arrivals-header">
+
+        <p>JUST IN</p>
+
+        <h1>New Arrivals</h1>
+
+        <span>
+            Discover the latest additions to our collection.
+        </span>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    {% if products %}
+
+    <div class="new-arrivals-grid">
+
+        {% for product in products %}
+
+        <div class="new-arrival-card">
+
+            <a
+                href="{% url 'product_detail' product.id %}"
+                class="new-arrival-image"
+            >
+
+                {% if product.image %}
+
+                <img
+                    src="{{ product.image.url }}"
+                    alt="{{ product.name }}"
+                >
+
+                {% endif %}
+
+            </a>
+
+
+            <div class="new-arrival-info">
+
+                <span class="new-arrival-category">
+                    {{ product.category|title }}
+                </span>
+
+                <h2>{{ product.name }}</h2>
+
+                <p>₹{{ product.price }}</p>
+
+                <a
+                    href="{% url 'product_detail' product.id %}"
+                    class="new-arrival-btn"
+                >
+                    VIEW PRODUCT
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% else %}
+
+    <div class="no-new-arrivals">
+
+        <h2>No New Arrivals Yet</h2>
+
+        <p>
+            Check back soon for our latest collection.
+        </p>
+
+        <a
+            href="{% url 'product' %}"
+            class="continue-shopping-btn"
+        >
+            SHOP COLLECTION
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

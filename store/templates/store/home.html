@@ -1,0 +1,244 @@
+{% extends 'store/base.html' %}
+
+{% block title %}Fashion Store | Home{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+
+    <div class="hero-content">
+
+        <h1>Elevate Your<br>Everyday Style</h1>
+
+        <p class="hero-description">
+            Discover fashion designed to express your individuality.
+            Timeless pieces, modern confidence, and a style that's truly yours.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'product' %}" class="btn-primary">Explore Collection</a>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-image">
+            <img src="/media/hero/fashion-hero.png" alt="Fashion Store Collection">
+        </div>
+    </div>
+
+</section>
+
+
+<!-- SHOP BY CATEGORY -->
+<section class="category-section">
+
+    <div class="category-heading">
+        <p>EXPLORE OUR COLLECTION</p>
+        <h2>Shop by Category</h2>
+        <span>Find styles thoughtfully selected for every part of your wardrobe.</span>
+    </div>
+
+    <div class="category-grid">
+
+        <!-- Women -->
+        <a href="{% url 'product' %}?category=women" class="category-card">
+            <img src="/media/categories/women.png" alt="Women's Fashion">
+            <div class="category-overlay">
+                <h3>Women</h3>
+                <span>Explore Collection</span>
+            </div>
+        </a>
+
+        <!-- Men -->
+        <a href="{% url 'product' %}?category=men" class="category-card">
+            <img src="/media/categories/men.png" alt="Men's Fashion">
+            <div class="category-overlay">
+                <h3>Men</h3>
+                <span>Explore Collection</span>
+            </div>
+        </a>
+
+        <!-- Children -->
+        <a href="{% url 'product' %}?category=children" class="category-card">
+            <img src="/media/categories/children.png" alt="Children's Fashion">
+            <div class="category-overlay">
+                <h3>Children</h3>
+                <span>Explore Collection</span>
+            </div>
+        </a>
+
+        <!-- Bags -->
+        <a href="{% url 'product' %}?category=bags" class="category-card">
+            <img src="/media/categories/bags.png" alt="Bags">
+            <div class="category-overlay">
+                <h3>Bags</h3>
+                <span>Explore Collection</span>
+            </div>
+        </a>
+
+        <!-- Shoes -->
+        <a href="{% url 'product' %}?category=shoes" class="category-card">
+            <img src="/media/categories/shoes.png" alt="Shoes">
+            <div class="category-overlay">
+                <h3>Shoes</h3>
+                <span>Explore Collection</span>
+            </div>
+        </a>
+
+    </div>
+</section>
+
+<!-- =========================
+     TOP TRENDS
+========================= -->
+
+<section class="trends-section">
+
+    <div class="trends-heading">
+        <p>WHAT'S POPULAR NOW</p>
+        <h2>Top Trends</h2>
+        <span>Discover the styles everyone is loving right now.</span>
+    </div>
+
+    <div class="trends-grid">
+
+    <a href="{% url 'product' %}" class="trend-card">
+        <div class="trend-image">
+            <img src="/media/trends/trend1.jpg" alt="Modern Essentials">
+        </div>
+    </a>
+
+    <a href="{% url 'product' %}" class="trend-card">
+        <div class="trend-image">
+            <img src="/media/trends/trend2.jpg" alt="Neutral Edit">
+        </div>
+    </a>
+
+    <a href="{% url 'product' %}" class="trend-card">
+        <div class="trend-image">
+            <img src="/media/trends/trend3.jpg" alt="Everyday Layers">
+        </div>
+    </a>
+
+    <a href="{% url 'product' %}" class="trend-card">
+        <div class="trend-image">
+            <img src="/media/trends/trend4.jpg" alt="Statement Style">
+        </div>
+    </a>
+
+    <a href="{% url 'product' %}" class="trend-card">
+        <div class="trend-image">
+            <img src="/media/trends/trend5.jpg" alt="Trending Fashion">
+        </div>
+    </a>
+
+    <a href="{% url 'product' %}" class="trend-card">
+
+        <div class="trend-image">
+            <img src="/media/trends/trend6.jpg" alt="Latest Trends">
+        </div>
+    </a>
+
+</div>
+</section>
+
+<!-- =========================
+     FASHION DESCRIPTION SECTION
+========================= -->
+
+<section class="fashion-description">
+
+    <div class="fashion-description-heading">
+        <h2>Discover Fashion for Every Style</h2>
+    </div>
+
+    <div class="fashion-description-content">
+
+        <p>
+            At Fashion Store, we believe style is a way to express who you are.
+            Explore thoughtfully selected fashion for every occasion, mood, and moment.
+            From everyday essentials to statement pieces, discover clothing, footwear,
+            and accessories designed to complement every wardrobe.
+        </p>
+
+        <p>
+            Whether you're refreshing your everyday look, shopping for a special
+            occasion, or discovering something new, our collections bring together
+            style, comfort, and versatility in one place.
+        </p>
+
+
+        <h3>Women's Fashion</h3>
+        <p>
+            Discover styles designed for every side of you. From elegant dresses and
+            timeless ethnic wear to casual everyday outfits and modern essentials,
+            explore a collection that helps you feel confident wherever you go.
+        </p>
+
+
+        <h3>Men's Fashion</h3>
+        <p>
+            Explore a versatile collection of men's fashion created for everyday
+            comfort and effortless style. From classic shirts and comfortable T-shirts
+            to smart trousers, jackets, and occasion-ready outfits, find pieces for
+            every moment.
+        </p>
+
+
+        <h3>Children's Fashion</h3>
+        <p>
+            Make every little moment more stylish with comfortable and playful fashion
+            for boys and girls. Explore everyday wear, festive outfits, and special
+            occasion styles designed for comfort and movement.
+        </p>
+
+
+        <h3>Bags & Accessories</h3>
+        <p>
+            Complete your look with the perfect bag. From everyday handbags and
+            practical backpacks to elegant clutches and versatile carryalls, discover
+            styles that combine functionality with effortless fashion.
+        </p>
+
+
+        <h3>Shoes & Footwear</h3>
+        <p>
+            Step into style with footwear for every occasion. Discover comfortable
+            everyday shoes, casual sneakers, elegant heels, stylish flats, and more
+            to complement every outfit with comfort and confidence.
+        </p>
+
+    </div>
+
+</section>
+{% endblock %}
+{% block footer %}
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <span>👜</span>
+                <div>
+                    <strong>FASHION</strong>
+                    <small>STORE</small>
+                </div>
+            </div>
+
+            <p>
+                Your one-stop destination for the latest fashion.
+                Style, comfort and quality – all in one place.
+            </p>
+        </div>
+
+        <!-- Keep the remaining footer code here -->
+
+    </div>
+
+</footer>
+{% endblock %}
+

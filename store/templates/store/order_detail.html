@@ -1,0 +1,129 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+Order Details | Fashion Store
+{% endblock %}
+
+
+{% block content %}
+
+<section class="order-detail-page">
+
+    <div class="order-detail-container">
+
+        <!-- HEADER -->
+        <div class="order-detail-header">
+
+            <p>ORDER DETAILS</p>
+
+            <h1>Order #{{ order.id }}</h1>
+
+            <span>
+                Placed on {{ order.created_at|date:"d M Y" }}
+            </span>
+
+        </div>
+
+
+        <!-- ORDER STATUS -->
+        <div class="order-detail-status">
+
+            <span>Order Status</span>
+
+            <strong>
+                {{ order.status|title }}
+            </strong>
+
+        </div>
+
+
+        <!-- DELIVERY ADDRESS -->
+        <div class="order-detail-address">
+
+            <p class="order-detail-section-title">
+                DELIVERY ADDRESS
+            </p>
+
+            <strong>
+                {{ order.address.first_name }}
+                {{ order.address.last_name }}
+            </strong>
+
+            <p>{{ order.address.address }}</p>
+
+            <p>
+                {{ order.address.city }},
+                {{ order.address.state }}
+                - {{ order.address.pincode }}
+            </p>
+
+            <p>Phone: {{ order.address.phone }}</p>
+
+        </div>
+
+
+        <!-- ORDER ITEMS -->
+        <div class="order-detail-items">
+
+            <p class="order-detail-section-title">
+                ORDER ITEMS
+            </p>
+
+            {% for item in order.items.all %}
+
+            <div class="order-detail-product">
+
+                <div class="order-detail-product-info">
+
+                    <strong>{{ item.product.name }}</strong>
+
+                    <p>
+                        Quantity: {{ item.quantity }}
+                    </p>
+
+                    <p>
+                        Price: ₹{{ item.price }}
+                    </p>
+
+                </div>
+
+                <strong class="order-item-total">
+                    ₹{{ item.price }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="order-detail-total">
+
+            <span>Total Amount</span>
+
+            <strong>
+                ₹{{ order.total_amount }}
+            </strong>
+
+        </div>
+
+
+        <!-- BACK BUTTON -->
+        <div class="order-detail-actions">
+
+            <a
+                href="{% url 'my_orders' %}"
+                class="back-orders-btn"
+            >
+                BACK TO MY ORDERS
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

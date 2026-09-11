@@ -1,0 +1,107 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+Contact Us | Fashion Store
+{% endblock %}
+
+{% block content %}
+
+<section class="contact-page">
+
+    <div class="contact-header">
+        <p>WE'D LOVE TO HEAR FROM YOU</p>
+        <h1>Contact Us</h1>
+    </div>
+
+    <div class="contact-container">
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+
+            <h2>Contact Information</h2>
+
+            <div class="contact-item">
+                <h3>📞 Phone</h3>
+                <p>+91 98765 43210</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>✉ Email</h3>
+                <p>support@fashionstore.com</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>📍 Address</h3>
+                <p>
+                    Fashion Store<br>
+                    Bengaluru, Karnataka, India
+                </p>
+            </div>
+
+            <div class="contact-item">
+                <h3>🕐 Working Hours</h3>
+                <p>
+                    Monday – Saturday<br>
+                    10:00 AM – 6:00 PM
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form">
+
+            <h2>Send Us a Message</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text"
+                               name="name"
+                               placeholder="Your name"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email"
+                               name="email"
+                               placeholder="Your email"
+                               required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Subject</label>
+                    <input type="text"
+                           name="subject"
+                           placeholder="How can we help?"
+                           required>
+                </div>
+
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message"
+                              rows="6"
+                              placeholder="Write your message..."
+                              required></textarea>
+                </div>
+
+                <button type="submit" class="contact-submit-btn">
+                    SEND MESSAGE
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

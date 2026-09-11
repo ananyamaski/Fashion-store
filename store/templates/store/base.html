@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Fashion Store{% endblock %}</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" 
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'store/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="announcement-bar">
+        <div class="announcement-left">
+            ✦ Thoughtfully Chosen. Beautifully Worn.
+        </div>
+
+        <div class="announcement-center">
+            Fashion That Feels Like You
+        </div>
+
+        <div class="announcement-right">
+            <a href="{% url 'contact' %}">Get In Touch</a>
+        </div>
+
+    </div>
+
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+
+        <!-- Logo -->
+        <a href="/" class="logo">
+            <div class="logo-icon">👜</div>
+            <div class="logo-text">
+                <span class="logo-main">FASHION</span>
+                <span class="logo-sub">STORE</span>
+            </div>
+        </a>
+
+
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="{% url 'product' %}">Shop</a>
+            <a href="{% url 'sale' %}">Sale</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </nav>
+
+
+        <!-- Search -->
+        <form
+            action="{% url 'product' %}"
+            method="GET"
+            class="search-box"
+        >
+            <input
+                type="text"
+                name="search"
+                placeholder="Search for products..."
+            >
+
+            <button type="submit" aria-label="Search">
+                <span class="search-icon">⌕</span>
+            </button>
+        </form>
+
+
+<!-- Navigation Actions -->
+<div class="nav-actions">
+
+    {% if user.is_authenticated %}
+
+        <!-- Username -->
+        <a href="{% url 'profile' %}" class="nav-action">
+            <span class="nav-action-icon">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+         xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="8" r="4"
+                stroke="currentColor"
+                stroke-width="1.8"/>
+        <path d="M4.5 21C5.3 16.8 8 14.5 12 14.5C16 14.5 18.7 16.8 19.5 21"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"/>
+    </svg>
+</span>
+            <span>{{ user.username }}</span>
+        </a>
+
+        <!-- My Orders -->
+       <a href="{% url 'my_orders' %}" class="nav-action my-orders-nav">
+            <span>My Orders</span>
+        </a>
+
+        <!-- Logout -->
+        <a href="{% url 'logout' %}" class="nav-action">
+            <span>Logout</span>
+        </a>
+
+    {% else %}
+
+        <!-- Login -->
+        <a href="{% url 'login' %}" class="nav-action">
+            <span class="nav-action-icon">
+                <i class="fa-regular fa-user"></i>
+            </span>
+            <span>Login</span>
+        </a>
+
+        <!-- Sign Up -->
+        <a href="{% url 'signup' %}" class="nav-action">
+            <span>Sign Up</span>
+        </a>
+
+    {% endif %}
+
+    <!-- Cart -->
+    <a href="{% url 'cart' %}" class="nav-action">
+        <span class="nav-action-icon">🛒</span>
+        <span>Cart</span>
+    </a>
+
+</div>
+    </header>
+
+
+    <!-- Page Content -->
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <!-- Footer -->
+    {% block footer %}
+    
+    {% endblock %}
+
+
+    <!-- JavaScript -->
+    <script src="{% static 'store/js/script.js' %}"></script>
+
+</body>
+</html>

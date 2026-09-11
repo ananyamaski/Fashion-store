@@ -1,0 +1,338 @@
+{% extends 'store/base.html' %}
+
+{% block title %}
+Checkout | Fashion Store
+{% endblock %}
+
+
+{% block content %}
+
+<section class="checkout-page">
+
+    <!-- HEADER -->
+    <div class="checkout-header">
+        <h1>Complete Your Order</h1>
+    </div>
+
+    <div class="checkout-container">
+
+        <!-- SHIPPING DETAILS -->
+        <div class="checkout-details">
+
+            <h2>Shipping Details</h2>
+
+
+            <!-- SAVED ADDRESSES -->
+            {% if addresses %}
+
+            <div class="saved-addresses">
+
+                <p class="saved-address-title">SAVED ADDRESSES</p>
+
+                {% for address in addresses %}
+
+                <label class="address-card">
+
+                    <input
+                        type="radio"
+                        name="selected_address"
+                        value="{{ address.id }}"
+                        {% if forloop.first %}checked{% endif %}
+                    >
+
+                    <div class="address-card-details">
+
+                        <strong>
+                            {{ address.first_name }} {{ address.last_name }}
+                        </strong>
+
+                        <p>{{ address.address }}</p>
+
+                        <p>
+                            {{ address.city }}, {{ address.state }}
+                            - {{ address.pincode }}
+                        </p>
+
+                        <p>Phone: {{ address.phone }}</p>
+
+                    </div>
+
+                </label>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            {% if addresses %}
+
+<div class="add-address-section">
+
+    <button
+        type="button"
+        class="add-address-btn"
+        id="addAddressBtn"
+    >
+        + ADD NEW ADDRESS
+    </button>
+
+</div>
+
+{% endif %}
+
+
+            <!-- NEW ADDRESS FORM -->
+            <form
+    id="newAddressForm"
+    class="new-address-form"
+    method="POST"
+>
+
+    {% csrf_token %}
+
+    <div class="checkout-row">
+
+        <div class="checkout-field">
+            <label>First Name</label>
+            <input
+                type="text"
+                name="first_name"
+                placeholder="Enter your first name"
+                value="{% if user_address %}{{ user_address.first_name }}{% endif %}"
+            >
+        </div>
+
+        <div class="checkout-field">
+            <label>Last Name</label>
+            <input
+                type="text"
+                name="last_name"
+                placeholder="Enter your last name"
+                value="{% if user_address %}{{ user_address.last_name }}{% endif %}"
+            >
+        </div>
+
+    </div>
+
+
+    <div class="checkout-field">
+        <label>Email Address</label>
+
+        <input
+            type="email"
+            value="{{ request.user.email }}"
+            disabled
+        >
+    </div>
+
+
+    <div class="checkout-field">
+        <label>Phone Number</label>
+
+        <input
+            type="tel"
+            name="phone"
+            placeholder="Enter your phone number"
+            value="{% if user_address %}{{ user_address.phone }}{% endif %}"
+        >
+    </div>
+
+
+    <div class="checkout-field">
+
+        <label>Address</label>
+
+        <textarea
+            name="address"
+            placeholder="Enter your full address"
+        ></textarea>
+
+    </div>
+
+
+    <div class="checkout-row">
+
+        <div class="checkout-field">
+
+            <label>City</label>
+
+            <input
+                type="text"
+                name="city"
+                placeholder="Enter your city"
+            >
+
+        </div>
+
+
+        <div class="checkout-field">
+
+            <label>State</label>
+
+            <input
+                type="text"
+                name="state"
+                placeholder="Enter your state"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div class="checkout-field checkout-pincode">
+
+        <label>PIN Code</label>
+
+        <input
+            type="text"
+            name="pincode"
+            placeholder="Enter PIN code"
+        >
+
+    </div>
+
+
+    <button
+        type="submit"
+        class="save-address-btn"
+    >
+        SAVE ADDRESS
+    </button>
+
+</form>
+
+        </div>
+
+
+        <!-- ORDER SUMMARY -->
+        <div class="checkout-summary">
+
+            <h2>Your Order</h2>
+
+            {% for item in cart_items %}
+
+            <div class="checkout-product">
+
+                <div class="checkout-product-image">
+
+                    {% if item.product.image %}
+
+                    <img
+                        src="{{ item.product.image.url }}"
+                        alt="{{ item.product.name }}"
+                    >
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="checkout-product-info">
+
+                    <h3>{{ item.product.name }}</h3>
+
+                    <p>Quantity: {{ item.quantity }}</p>
+
+                    <strong>₹{{ item.total_price }}</strong>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+            <div class="checkout-total">
+
+                <span>Total</span>
+
+                <strong>₹{{ total }}</strong>
+
+            </div>
+
+
+            <form method="POST" action="{% url 'place_order' %}">
+
+    {% csrf_token %}
+
+    {% if addresses %}
+        <input
+            type="hidden"
+            name="selected_address"
+            id="selectedAddress"
+            value="{{ addresses.first.id }}"
+        >
+    {% endif %}
+
+    <button
+        type="submit"
+        class="place-order-btn"
+    >
+        PLACE ORDER
+    </button>
+
+</form>
+        </div>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    const addAddressBtn =
+        document.getElementById("addAddressBtn");
+
+    const newAddressForm =
+        document.getElementById("newAddressForm");
+
+
+    /* Existing user has the Add New Address button */
+    if (addAddressBtn) {
+
+        /* Hide form initially */
+        newAddressForm.style.display = "none";
+
+        addAddressBtn.addEventListener("click", function () {
+
+            if (newAddressForm.style.display === "none") {
+
+                newAddressForm.style.display = "block";
+                addAddressBtn.innerText = "CANCEL";
+
+            } else {
+
+                newAddressForm.style.display = "none";
+                addAddressBtn.innerText = "+ ADD NEW ADDRESS";
+
+            }
+
+        });
+
+    }
+
+    const addressRadios =
+    document.querySelectorAll(
+        'input[name="selected_address"]'
+    );
+
+const selectedAddress =
+    document.getElementById("selectedAddress");
+
+addressRadios.forEach(function (radio) {
+
+    radio.addEventListener("change", function () {
+
+        selectedAddress.value = this.value;
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

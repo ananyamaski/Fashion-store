@@ -1,0 +1,128 @@
+{% extends 'store/base.html' %}
+
+{% load static %}
+
+{% block title %}All Products | Fashion Store{% endblock %}
+
+{% block content %}
+
+<section class="product-page">
+
+    <!-- PAGE HEADER -->
+    <div class="product-header">
+        <p>Discover styles selected for every occasion.</p>
+    </div>
+
+    <!-- FILTER AND SORT -->
+<div class="product-toolbar">
+
+    <div class="product-count">
+        <span>Showing all products</span>
+    </div>
+
+    <form method="GET" class="filter-form">
+
+        <!-- CATEGORY -->
+        <select name="category" class="filter-select" onchange="this.form.submit()">
+            <option value="">All Categories</option>
+
+            <option value="women"
+                {% if selected_category == 'women' %}selected{% endif %}>
+                Women
+            </option>
+
+            <option value="men"
+                {% if selected_category == 'men' %}selected{% endif %}>
+                Men
+            </option>
+
+            <option value="children"
+                {% if selected_category == 'children' %}selected{% endif %}>
+                Children
+            </option>
+
+            <option value="bags"
+                {% if selected_category == 'bags' %}selected{% endif %}>
+                Bags
+            </option>
+
+            <option value="shoes"
+                {% if selected_category == 'shoes' %}selected{% endif %}>
+                Shoes
+            </option>
+        </select>
+
+
+        <!-- SORT -->
+        <select name="sort" class="filter-select" onchange="this.form.submit()">
+
+            <option value="">Sort By</option>
+
+            <option value="newest"
+                {% if selected_sort == 'newest' %}selected{% endif %}>
+                Newest
+            </option>
+
+            <option value="low-high"
+                {% if selected_sort == 'low-high' %}selected{% endif %}>
+                Price: Low to High
+            </option>
+
+            <option value="high-low"
+                {% if selected_sort == 'high-low' %}selected{% endif %}>
+                Price: High to Low
+            </option>
+
+        </select>
+
+    </form>
+
+</div>
+    <!-- PRODUCTS GRID -->
+<div class="products-grid">
+
+    {% for product in products %}
+
+    <div class="product-card">
+
+        <a href="{% url 'product_detail' product.id %}">
+
+            <div class="product-image">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <p>No image available</p>
+                {% endif %}
+            </div>
+
+            <div class="product-details">
+
+                <p class="product-category">
+                    {{ product.get_category_display }}
+                </p>
+
+                <h3>{{ product.name }}</h3>
+
+                <span class="product-price">
+                    ₹{{ product.price }}
+                </span>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    {% empty %}
+
+        <p>No products available.</p>
+
+    {% endfor %}
+
+</div>
+
+</section>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
